@@ -2,3 +2,4 @@ import { LoginController } from '../controller/login.Controller';
 import express from 'express';
 export const router = express.Router();
 router.get("/", LoginController.showFormLogin);
+router.post("/", LoginController.login);

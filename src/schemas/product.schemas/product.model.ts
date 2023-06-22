@@ -20,4 +20,4 @@ const productSchema = new Schema<IProduct>({
     status: [{ type: Schema.Types.ObjectId, ref: 'Status' }],
 });
 
-export const Category = model<IProduct>('Product', productSchema);
+export const Product = model<IProduct>('Product', productSchema);

@@ -8,4 +8,4 @@ const statusSchema = new Schema<IStatus>({
     name: String,
 });
 
-export const Category = model<IStatus>('Category', statusSchema);
+export const Status = model<IStatus>('Status', statusSchema);

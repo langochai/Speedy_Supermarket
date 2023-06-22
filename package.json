@@ -3,6 +3,7 @@
     "body-parser": "^1.20.2",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "mongoose": "^7.3.1",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
@@ -13,7 +14,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf dist && tsc -p tsconfig.build.json", 
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "start:dev": "rimraf dist && tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\""
   },
   "author": "",

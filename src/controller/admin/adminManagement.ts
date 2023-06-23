@@ -9,7 +9,12 @@ export class AdminManagement {
             .populate('status','name',Status);
         res.render('admin/adminHomePage.ejs',{productList:productList})
     }
-    static async adminAddProduct(req,res){
+    static async getAdminAddProduct(req, res){
         res.render('admin/adminAddProduct.ejs')
+    }
+    static async postAdminAddProduct(req,res){
+        console.log(req.body)
+        console.log(req.file)
+        res.redirect('/admin')
     }
 }

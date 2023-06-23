@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-     <base href="/admin">
+    <base href="/admin">
 
-    <title>Pod Talk - Free Bootstrap 5 CSS Template</title>
+    <title>Add a product</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -123,14 +123,56 @@ https://templatemo.com/tm-584-pod-talk
     </main>
 </div>
 
-<div style="z-index: 2;position: relative">
+<div style="z-index: 2;position: relative;margin-left: 100px">
     <a href="/admin" class="btn btn-outline-secondary">Back</a>
 </div>
 
-<div style="z-index: 2;position: relative">
-    <table class="table table-success table-striped table-hover" style="text-align: center">
-
-    </table>
+<div style="z-index: 2;position: relative;margin: 100px">
+    <form action="" method="post" enctype="multipart/form-data">
+        <table class="table table-success table-striped" style="text-align: center">
+            <tr>
+                <td>Product name:</td>
+                <td><input type="text" name="productName"></td>
+            </tr>
+            <tr>
+                <td>Price:</td>
+                <td><input type="number" name="price"></td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td><input type="number" name="quantity"></td>
+            </tr>
+            <tr>
+                <td>Discount:</td>
+                <td><input type="number" name="discount"></td>
+            </tr>
+            <tr>
+                <td>Image:</td>
+                <td><input type="file" name="image" accept="image/*"></td>
+            </tr>
+            <tr>
+                <td>Category:</td>
+                <td>
+                    <input type="checkbox" id="clothes" name="category" value="clothes">
+                    <label for="clothes">Clothes</label>
+                    <input type="checkbox" id="food" name="category" value="food">
+                    <label for="food">Food</label>
+                    <input type="checkbox" id="household goods" name="category" value="household goods">
+                    <label for="household goods">Household goods</label>
+                </td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td>
+                    <input type="checkbox" id="discount" name="status" value="discount">
+                    <label for="discount">Discount</label>
+                    <input type="checkbox" id="trending" name="status" value="trending">
+                    <label for="trending">Trending</label>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
 </div>
 
 <div style="z-index: 1;position: relative">

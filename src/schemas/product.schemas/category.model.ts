@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 interface ICategory {
-    name: string;
+    name: string; // there are 3 categories : clothes, food, household goods
 }
 
 const categorySchema = new Schema<ICategory>({

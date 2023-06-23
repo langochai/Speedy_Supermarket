@@ -1,5 +1,5 @@
-import { LoginController } from '../controller/login.Controller';
+import { SigninController } from '../controller/signin.Controller';
 import express from 'express';
 export const router = express.Router();
-router.get("/", LoginController.showFormLogin);
-router.post("/", LoginController.login);
+router.get("/", SigninController.showFormSignin);
+router.post("/", SigninController.signin);

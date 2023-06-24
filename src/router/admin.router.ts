@@ -14,3 +14,5 @@ export const router = express.Router();
 router.get("/", AdminManagement.showAdminHomePage);
 router.get("/product/add/",AdminManagement.getAdminAddProduct)
 router.post("/product/add/",upload.single('image'),AdminManagement.postAdminAddProduct)
+router.get("/product/update/:id",AdminManagement.getAdminUpdateProduct)
+router.post("/product/update/:id",upload.single('image'),AdminManagement.postAdminUpdateProduct)

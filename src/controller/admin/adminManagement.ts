@@ -50,4 +50,31 @@ export class AdminManagement {
         await addProduct.save()
         res.redirect('/admin')
     }
+    static async getAdminUpdateProduct(req,res){
+        let id = req.params.id;
+        let product = await Product
+            .findById(id)
+            .populate('category', 'name', Category)
+            .populate('status', 'name', Status);
+        let {category,status} = product
+        let categoryName = []
+        category.forEach((cate:any)=>{
+            categoryName.push(cate.name)
+        })
+        let clothes = categoryName.includes("clothes")? "checked":""
+        let food = categoryName.includes("food")? "checked":""
+        let householdGoods = categoryName.includes("household goods")? "checked":""
+        let statusName = []
+        status.forEach((stat:any)=>{
+            statusName.push(stat.name)
+        })
+        let discount = statusName.includes("discount")? "checked":""
+        let trending = statusName.includes("trending")? "checked":""
+        res.render('admin/adminUpdateProduct',{product,clothes,food,householdGoods,discount,trending})
+    }
+    static async postAdminUpdateProduct(req,res){
+        console.log(req.body)
+        console.log(req.file)
+        res.redirect('/admin')
+    }
 }

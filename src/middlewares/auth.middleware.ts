@@ -5,12 +5,14 @@ import { User } from '../schemas/user.schemas/user.model';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 import { PORT } from "../../index";
 
-passport.use(new LocalStrategy(async (username, password, done) => {
-    const user = await User.findOne({ username });
-    if (!user) return done(null, false, { message: 'Incorrect username and password' });
-    if (user.password !== password) return done(null, false, { message: 'Incorrect username and password' });
-    return done(null, user);
-}))
+passport.use(new LocalStrategy(
+    { usernameField: 'username', passwordField: 'password' }, async (username, password, done) => {
+        const user = await User.findOne({ username });
+        if (!user) return done(null, false, { message: 'Incorrect username and password' });
+        if (user.password !== password) return done(null, false, { message: 'Incorrect username and password' });
+        return done(null, user);
+    }
+));
 
 passport.serializeUser((user: any, done) => {
     process.nextTick(() => {
@@ -39,8 +41,6 @@ passport.use(new GoogleStrategy({
             if (existingUser) {
                 return done(null, existingUser);
             }
-            console.log('Creating new user...');
-
             const newUser = new User({
                 google: {
                     id: profile.id
@@ -50,7 +50,6 @@ passport.use(new GoogleStrategy({
                 role: "user"
             })
             await newUser.save();
-            console.log(newUser, 'newUser');
             return done(null, newUser);
         } catch (err) {
             return done(null, false);

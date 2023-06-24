@@ -145,7 +145,7 @@ https://templatemo.com/tm-584-pod-talk
             <td class="col-1"><%=product.price%></td>
             <td class="col-1"><%=product.quantity%></td>
             <td class="col-1"><%=product.discount%></td>
-            <td class="col-3"><%=product.image%></td>
+            <td class="col-3"><img src="<%=product.image%>" alt="failed to load img" width="200px" height="200px"></td>
             <td class="col-1">
                 <%product.category.forEach(cate=>{%>
                     <%= cate.name%>

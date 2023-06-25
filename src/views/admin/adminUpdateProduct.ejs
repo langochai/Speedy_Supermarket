@@ -159,11 +159,11 @@ https://templatemo.com/tm-584-pod-talk
                 <td>Category:</td>
                 <td>
                     <% category.forEach(cate=>{%>
-                    <input type="checkbox" id="<%=cate.name%>" name="status" value="<%=cate.name%>" checked>
+                    <input type="checkbox" id="<%=cate.name%>" name="category" value="<%=cate.name%>" checked>
                     <label for="<%=cate.name%>"><%=cate.name%></label>
                     <%})%>
                     <% categoryFilter.forEach(cateFilter=>{%>
-                    <input type="checkbox" id="<%=cateFilter.name%>" name="status" value="<%=cateFilter.name%>">
+                    <input type="checkbox" id="<%=cateFilter.name%>" name="category" value="<%=cateFilter.name%>">
                     <label for="<%=cateFilter.name%>"><%=cateFilter.name%></label>
                     <%})%>
                 </td>

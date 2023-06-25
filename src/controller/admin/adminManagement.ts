@@ -76,6 +76,11 @@ export class AdminManagement {
     static async postAdminUpdateProduct(req,res){
         console.log(req.body)
         console.log(req.file)
+        let product = await Product
+            .findById(req.params.id)
+            .populate('category', {name:1,_id:0}, Category)
+            .populate('status', {name:1,_id:0}, Status);
+        console.log(product)
         res.redirect('/admin')
     }
 }

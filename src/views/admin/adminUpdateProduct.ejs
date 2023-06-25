@@ -158,21 +158,27 @@ https://templatemo.com/tm-584-pod-talk
             <tr>
                 <td>Category:</td>
                 <td>
-                    <input type="checkbox" id="clothes" name="category" value="clothes" <%=clothes%>>
-                    <label for="clothes">Clothes</label>
-                    <input type="checkbox" id="food" name="category" value="food" <%=food%>>
-                    <label for="food">Food</label>
-                    <input type="checkbox" id="household goods" name="category" value="household goods" <%=householdGoods%>>
-                    <label for="household goods">Household goods</label>
+                    <% category.forEach(cate=>{%>
+                    <input type="checkbox" id="<%=cate.name%>" name="status" value="<%=cate.name%>" checked>
+                    <label for="<%=cate.name%>"><%=cate.name%></label>
+                    <%})%>
+                    <% categoryFilter.forEach(cateFilter=>{%>
+                    <input type="checkbox" id="<%=cateFilter.name%>" name="status" value="<%=cateFilter.name%>">
+                    <label for="<%=cateFilter.name%>"><%=cateFilter.name%></label>
+                    <%})%>
                 </td>
             </tr>
             <tr>
                 <td>Status:</td>
                 <td>
-                    <input type="checkbox" id="discount" name="status" value="discount" <%=discount%>>
-                    <label for="discount">Discount</label>
-                    <input type="checkbox" id="trending" name="status" value="trending" <%=trending%>>
-                    <label for="trending">Trending</label>
+                    <% status.forEach(stat=>{%>
+                    <input type="checkbox" id="<%=stat.name%>" name="status" value="<%=stat.name%>" checked>
+                    <label for="<%=stat.name%>"><%=stat.name%></label>
+                    <%})%>
+                    <% statusFilter.forEach(stat=>{%>
+                    <input type="checkbox" id="<%=stat.name%>" name="status" value="<%=stat.name%>">
+                    <label for="<%=stat.name%>"><%=stat.name%></label>
+                    <%})%>
                 </td>
             </tr>
         </table>

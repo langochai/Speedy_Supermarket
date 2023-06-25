@@ -54,23 +54,24 @@ export class AdminManagement {
         let id = req.params.id;
         let product = await Product
             .findById(id)
-            .populate('category', 'name', Category)
-            .populate('status', 'name', Status);
-        let {category,status} = product
-        let categoryName = []
-        category.forEach((cate:any)=>{
-            categoryName.push(cate.name)
-        })
-        let clothes = categoryName.includes("clothes")? "checked":""
-        let food = categoryName.includes("food")? "checked":""
-        let householdGoods = categoryName.includes("household goods")? "checked":""
-        let statusName = []
-        status.forEach((stat:any)=>{
-            statusName.push(stat.name)
-        })
-        let discount = statusName.includes("discount")? "checked":""
-        let trending = statusName.includes("trending")? "checked":""
-        res.render('admin/adminUpdateProduct',{product,clothes,food,householdGoods,discount,trending})
+            .populate('category', {name:1,_id:0}, Category)
+            .populate('status', {name:1,_id:0}, Status);
+        let {category,status} = product;
+        let categoryList = await Category.find({},{name:1,_id:0});
+        let categoryFilter = categoryList.filter(item=> {
+            for (let cate of category){
+                // @ts-ignore
+                if(cate.name!==item.name) return item
+            }
+        });
+        let statusList = await Status.find({},{name:1,_id:0});
+        let statusFilter = statusList.filter(item=> {
+            for (let stat of status){
+                // @ts-ignore
+                if(stat.name!==item.name) return item
+            }
+        });
+        res.render('admin/adminUpdateProduct',{product,category,categoryFilter,status,statusFilter});
     }
     static async postAdminUpdateProduct(req,res){
         console.log(req.body)

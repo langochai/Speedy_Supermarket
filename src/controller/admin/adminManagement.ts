@@ -1,6 +1,8 @@
 import {Product} from "../../schemas/product.schemas/product.model";
 import {Category} from "../../schemas/product.schemas/category.model";
 import {Status} from "../../schemas/product.schemas/status.model";
+import * as fs from "fs";
+import path from "path";
 
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
@@ -20,8 +22,8 @@ export class AdminManagement {
         let newCategory = []
         let newStatus = []
         if (typeof category == typeof "") {
-                let cate = await Category.findOne({name: category})
-                if (cate._id) newCategory.push(cate._id)
+            let cate = await Category.findOne({name: category})
+            if (cate._id) newCategory.push(cate._id)
         } else {
             for (const cate of category) {
                 let cateEach = await Category.findOne({name: cate})
@@ -29,8 +31,8 @@ export class AdminManagement {
             }
         }
         if (typeof status == typeof "") {
-                let stat = await Status.findOne({name: status})
-                if (stat._id) newStatus.push(stat._id)
+            let stat = await Status.findOne({name: status})
+            if (stat._id) newStatus.push(stat._id)
         } else {
             for (const stat of status) {
                 let statEach = await Status.findOne({name: stat})
@@ -50,37 +52,86 @@ export class AdminManagement {
         await addProduct.save()
         res.redirect('/admin')
     }
-    static async getAdminUpdateProduct(req,res){
+
+    static async getAdminUpdateProduct(req, res) {
         let id = req.params.id;
         let product = await Product
             .findById(id)
-            .populate('category', {name:1,_id:0}, Category)
-            .populate('status', {name:1,_id:0}, Status);
-        let {category,status} = product;
-        let categoryList = await Category.find({},{name:1,_id:0});
-        let categoryFilter = categoryList.filter(item=> {
-            for (let cate of category){
+            .populate('category', {name: 1, _id: 0}, Category)
+            .populate('status', {name: 1, _id: 0}, Status);
+        let {category, status} = product;
+        let categoryList = await Category.find({}, {name: 1, _id: 0});
+        let categoryFilter = categoryList.filter(item => {
+            let flag = true
+            for (let cate of category) {
                 // @ts-ignore
-                if(cate.name!==item.name) return item
+                if (item.name === cate.name) flag = false
             }
+            if (flag) return item
         });
-        let statusList = await Status.find({},{name:1,_id:0});
-        let statusFilter = statusList.filter(item=> {
-            for (let stat of status){
+        let statusList = await Status.find({}, {name: 1, _id: 0});
+        let statusFilter = statusList.filter(item => {
+            let flag = true
+            for (let stat of status) {
                 // @ts-ignore
-                if(stat.name!==item.name) return item
+                if (item.name === stat.name) flag = false
             }
+            if (flag) return item
         });
-        res.render('admin/adminUpdateProduct',{product,category,categoryFilter,status,statusFilter});
+        res.render('admin/adminUpdateProduct', {product, category, categoryFilter, status, statusFilter});
     }
-    static async postAdminUpdateProduct(req,res){
-        console.log(req.body)
-        console.log(req.file)
+
+    static async postAdminUpdateProduct(req, res) {
         let product = await Product
             .findById(req.params.id)
-            .populate('category', {name:1,_id:0}, Category)
-            .populate('status', {name:1,_id:0}, Status);
-        console.log(product)
-        res.redirect('/admin')
+            .populate('category', {name: 1, _id: 0}, Category)
+            .populate('status', {name: 1, _id: 0}, Status);
+
+        let {productName, price, quantity, discount} = req.body;
+        let {image, category, status} = product;
+
+        let newName = productName === "" ? product.name : productName;
+        let newPrice = price === "" ? product.price : price
+        let newQuantity = quantity === "" ? product.quantity : quantity
+        let newDiscount = discount === "" ? product.discount : discount
+        let newImage = req.file ? "uploads/" + newName + newPrice + req.file.originalname : image;
+        if (req.file) await fs.unlink(path.join(__dirname, '../../../../public/index/' + image), (err) => {
+            if (err) console.log(err.message)
+        })
+
+        let newCategory = req.body.category ? req.body.category : category;
+        let newStatus = req.body.status ? req.body.status : status;
+        let categoryList = []
+        let statusList = []
+        if (typeof newCategory === typeof "") {
+            let cate = await Category.findOne({name: newCategory})
+            if (cate._id) categoryList.push(cate._id)
+        } else {
+            for (const cate of newCategory) {
+                let cateEach = await Category.findOne({name: cate})
+                categoryList.push(cateEach._id)
+            }
+        }
+        if (typeof newStatus == typeof "") {
+            let stat = await Status.findOne({name: newStatus})
+            if (stat._id) statusList.push(stat._id)
+        } else {
+            for (const stat of newStatus) {
+                let statEach = await Status.findOne({name: stat})
+                statusList.push(statEach._id)
+            }
+        }
+
+        let updatedProduct = {
+            name: newName,
+            price: +newPrice,
+            quantity: +newQuantity,
+            discount: +newDiscount,
+            image: newImage,
+            category: categoryList,
+            status: statusList
+        };
+        await Product.updateOne({_id: product._id}, updatedProduct)
+        res.redirect('/admin');
     }
 }

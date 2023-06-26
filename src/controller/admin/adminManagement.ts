@@ -24,7 +24,7 @@ export class AdminManagement {
         if (typeof category == typeof "") {
             let cate = await Category.findOne({name: category})
             if (cate._id) newCategory.push(cate._id)
-        } else {
+        } else if (category) {
             for (const cate of category) {
                 let cateEach = await Category.findOne({name: cate})
                 newCategory.push(cateEach._id)
@@ -33,7 +33,7 @@ export class AdminManagement {
         if (typeof status == typeof "") {
             let stat = await Status.findOne({name: status})
             if (stat._id) newStatus.push(stat._id)
-        } else {
+        } else if (status) {
             for (const stat of status) {
                 let statEach = await Status.findOne({name: stat})
                 newStatus.push(statEach._id)
@@ -55,10 +55,13 @@ export class AdminManagement {
 
     static async getAdminUpdateProduct(req, res) {
         let id = req.params.id;
-        let product = await Product
+        let product:any = await Product
             .findById(id)
             .populate('category', {name: 1, _id: 0}, Category)
-            .populate('status', {name: 1, _id: 0}, Status);
+            .populate('status', {name: 1, _id: 0}, Status)
+            .catch(err=>{
+                if(err) res.redirect("/admin")
+            });
         let {category, status} = product;
         let categoryList = await Category.find({}, {name: 1, _id: 0});
         let categoryFilter = categoryList.filter(item => {
@@ -133,5 +136,15 @@ export class AdminManagement {
         };
         await Product.updateOne({_id: product._id}, updatedProduct)
         res.redirect('/admin');
+    }
+    static async getAdminDeleteProduct(req,res){
+        let id = req.params.id
+        let product = await Product.findById(id).catch(err=>{
+            if(err) res.redirect("/admin")
+        })
+        res.render("admin/adminDeleteProduct.ejs",{product})
+    }
+    static async postAdminDeleteProduct(req,res){
+
     }
 }

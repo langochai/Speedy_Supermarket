@@ -1,4 +1,4 @@
 import { SearchController } from '../controller/search.Controller';
 import express from 'express';
 export const router = express.Router();
-router.post("/search", SearchController.productsSearch);
+router.post("/", SearchController.productsSearch);

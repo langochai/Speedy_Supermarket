@@ -8,7 +8,7 @@ import {router as AdminRouter} from "./admin.router";
 export const Router = (app)=>{
     app.use('/home',HomeRouter);
     app.use('/signin',LoginRouter);
-    app.use('/signup',SignupRouter);
+    app.use('/signup',SignupRouter)
     app.use("/search", SearchRouter);
     app.use("/test", TestRouter);
     app.use('/admin',AdminRouter);

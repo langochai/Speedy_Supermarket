@@ -1,10 +1,14 @@
 import { Product } from "../schemas/product.schemas/product.model";
 export class SearchController {
-    static async productsSearch(req: any, res: any) {
-        // let query={
-        let nameSearch = req.query.name // ||""
+    static async productsSearch(nameSearch) {
         let product = await Product.findOne({
-            name: "Hot"
+            name: nameSearch
         })
     }
-}
+
+    static productSearch(req: any, res: any) {
+        let productName = req.params.name;
+        let products = this.productsSearch(productName);
+        res.status(200).json(products)
+    }
+}  

@@ -2,7 +2,7 @@ import { Cart } from '../schemas/user.schemas/cart.model';
 import { Role } from '../schemas/user.schemas/role.model';
 import { User } from '../schemas/user.schemas/user.model';
 
-export class SignupController {
+export class AuthController {
     static showSignupPage(req: any, res: any): void {
         res.render('signup', { alertUsernameExisted: false });
     }
@@ -23,7 +23,7 @@ export class SignupController {
             role: newRole,
         }).save();
 
-        res.redirect('/signin');
+        res.redirect('/auth/signin');
     }
 
     static alertControl(req: any, res: any, next: any): void {
@@ -32,5 +32,15 @@ export class SignupController {
             res.locals.alertSignupSuccess = true;
         }
         next();
+    }
+
+    static showFormSignin(req: any, res: any) {
+        if (!res.locals.alertWrongAccountInfo) res.locals.alertWrongAccountInfo = false;
+        if (!res.locals.alertSignupSuccess) res.locals.alertSignupSuccess = false;
+        res.render('signin');
+    }
+
+    static logout(req: any, res: any) {
+        
     }
 }

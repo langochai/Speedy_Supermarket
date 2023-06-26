@@ -13,7 +13,6 @@ router.post('/signin', (req, res, next) => {
         req.logIn(user, (err) => {
             err ? next(err) : res.redirect('/home');
         });
-        res.locals.user = req.user;
     })(req, res, next);
 });
 

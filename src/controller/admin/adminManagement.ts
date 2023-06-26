@@ -6,8 +6,9 @@ import path from "path";
 
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
+        let search = await AdminManagement.adminSearchProduct(req, res)
         let productList = await Product
-            .find()
+            .find(search)
             .populate('category', 'name', Category)
             .populate('status', 'name', Status);
         res.render('admin/adminHomePage.ejs', {productList: productList})
@@ -148,5 +149,18 @@ export class AdminManagement {
         let id = req.params.id;
         await Product.deleteOne({_id:id})
         res.redirect("/admin")
+    }
+
+    static async adminSearchProduct(req, res) {
+        let queryName = {}
+        if (req.query.search) {
+            let search = req.query.search
+            queryName = {
+                name: {
+                    $regex: search
+                }
+            }
+        }
+        return queryName;
     }
 }

@@ -1,5 +1,4 @@
 import { Cart } from '../schemas/user.schemas/cart.model';
-import { Role } from '../schemas/user.schemas/role.model';
 import { User } from '../schemas/user.schemas/user.model';
 
 export class AuthController {
@@ -11,16 +10,13 @@ export class AuthController {
         const usernameExists = await User.exists({ username: req.body.username });
         if (usernameExists) return res.render('signup', { alertUsernameExisted: true });
 
-        const [newRole, newCart] = await Promise.all([
-            new Role({ name: 'normalUser' }).save(),
-            new Cart({ detail: [], purchased: false }).save(), //check detail later
-        ]);
+        const newCart = await new Cart({ detail: [], purchased: false }).save(); //check detail later
 
         await new User({
             username: req.body.username,
             password: req.body.password,
             cart: newCart,
-            role: newRole,
+            role: 'normalUser',
         }).save();
 
         res.redirect('/auth/signin');
@@ -41,7 +37,8 @@ export class AuthController {
     }
 
     static logout(req: any, res: any) {
-        req.logOut;
-        res.redirect('/home');
+        req.logout(function (err) {
+            err ? res.render('error', { error: err }) : res.redirect('/home');
+        });
     }
 }

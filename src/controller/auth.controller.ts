@@ -1,6 +1,7 @@
 import { Cart } from '../schemas/user.schemas/cart.model';
 import { Role } from '../schemas/user.schemas/role.model';
 import { User } from '../schemas/user.schemas/user.model';
+import passport from '../middlewares/auth.middleware';
 
 export class AuthController {
     static showSignupPage(req: any, res: any): void {
@@ -41,7 +42,8 @@ export class AuthController {
     }
 
     static logout(req: any, res: any) {
-        req.logOut;
-        res.redirect('/home');
+        req.logout(function (err) {
+            err ? res.render('error', { error: err }) : res.redirect('/home');
+        });
     }
 }

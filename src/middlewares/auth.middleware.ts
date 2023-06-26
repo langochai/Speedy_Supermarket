@@ -7,10 +7,14 @@ import { PORT } from "../../index";
 
 passport.use(new LocalStrategy(
     { usernameField: 'username', passwordField: 'password' }, async (username, password, done) => {
-        const user = await User.findOne({ username });
-        if (!user) return done(null, false, { message: 'Incorrect username and password' });
-        if (user.password !== password) return done(null, false, { message: 'Incorrect username and password' });
-        return done(null, user);
+        try {
+            const user = await User.findOne({ username });
+            if (!user) return done(null, false, { message: 'Incorrect username and password' });
+            if (user.password !== password) return done(null, false, { message: 'Incorrect username and password' });
+            return done(null, user);
+        } catch (error) {
+            return done(error);
+        }
     }
 ));
 
@@ -36,20 +40,15 @@ passport.use(new GoogleStrategy({
 },
     async (request: any, accessToken: any, refreshToken: any, profile: any, done: any) => {
         try {
-            console.log(profile, 'profile');
-            let existingUser = await User.findOne({ 'google.id': profile.id })
-            if (existingUser) {
-                return done(null, existingUser);
-            }
-            const newUser = new User({
-                google: {
-                    id: profile.id
-                },
+            const existingUser = await User.findOne({ 'google.id': profile.id });
+            if (existingUser) return done(null, existingUser);
+            const newUser = await new User({
+                google: { id: profile.id },
                 username: profile.emails[0].value,
                 password: null,
-                role: "user"
-            })
-            await newUser.save();
+                role: "normalUser"
+            }).save();
+
             return done(null, newUser);
         } catch (err) {
             return done(null, false);

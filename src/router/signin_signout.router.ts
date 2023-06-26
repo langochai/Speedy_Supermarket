@@ -4,6 +4,8 @@ import passport from '../middlewares/auth.middleware';
 import express from 'express';
 export const router = express.Router();
 
+router.get('/logout',)
+
 router.use(SignupController.alertControl);
 router.get("/", SigninController.showFormSignin);
 
@@ -14,15 +16,7 @@ router.post('/', (req, res, next) => {
         req.logIn(user, (err) => {
             err ? next(err) : res.redirect('/home');
         });
-    })(req, res, next); //chay cai nay xong
+        res.locals.user = req.user;
+    })(req, res, next);
 });
-// router.use((req: any, res: any, next: any) => { // phai chay cai nay
-//     if (req.isAuthenticated()) {
-//         console.log('aaaaaaaaaa')
-//         res.locals.userLogin = req.user;
-//         next();
-//     } else {
-//         res.redirect('/login');
-//     }
-// });
 

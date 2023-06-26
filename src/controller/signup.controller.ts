@@ -8,24 +8,21 @@ export class SignupController {
     }
 
     static async createAccount(req: any, res: any): Promise<any> {
-        const findUsername = await User.find({'username': req.body.username});
-        if (findUsername.length !== 0) return res.render('signup', { alertUsernameExisted: true });
+        const usernameExists = await User.exists({ username: req.body.username });
+        if (usernameExists) return res.render('signup', { alertUsernameExisted: true });
 
-        const newRole = new Role({name: 'normalUser'});
-        const newCart = new Cart({
-            detail: [], // checklater
-            purchased: false,
-        });
-        const newUser = new User({
+        const [newRole, newCart] = await Promise.all([
+            new Role({ name: 'normalUser' }).save(),
+            new Cart({ detail: [], purchased: false }).save(), //check detail later
+        ]);
+
+        await new User({
             username: req.body.username,
             password: req.body.password,
             cart: newCart,
-            role: newRole
-        });
+            role: newRole,
+        }).save();
 
-        await newRole.save();
-        await newCart.save();
-        await newUser.save();
         res.redirect('/signin');
     }
 

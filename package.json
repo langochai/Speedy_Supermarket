@@ -8,6 +8,7 @@
     "mongoose": "^7.3.1",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
+    "nodemon": "^2.0.22",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.16"
   },
@@ -17,7 +18,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
-    "start:dev": "rimraf dist && tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\""
+    "start:dev": "rimraf dist && tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\"",
+    "dev": "rimraf dist && tsc-watch -p tsconfig.build.json --onSuccess \"nodemon dist/index.js\""
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@types/express": "^4.17.17",
     "rimraf": "^5.0.1",
+    "ts-node-dev": "^2.0.0",
     "tsc": "^2.0.4",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.1.3"

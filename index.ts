@@ -17,6 +17,7 @@ app.set('views', path.join(__dirname,'../src/views'));
 
 app.use(express.static("./public/index"))
 app.use(express.static("./public/login"))
+app.use(express.static("./public/showListProduct"))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,5 +34,5 @@ app.use(passport.authenticate('session'));
 Router(app);
 
 app.listen(PORT, "localhost", () => {
-    console.log("Server is running on port" + PORT);
+    console.log("Server is running on port " + PORT);
 });

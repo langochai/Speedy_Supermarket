@@ -1,4 +1,4 @@
-import { Product } from "../schemas/product.schemas/product.model";
+import { Product } from "../../schemas/product.schemas/product.model";
 export class SearchController {
     static async productsSearch(nameSearch) {
         let product = await Product.findOne({

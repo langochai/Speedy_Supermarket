@@ -41,6 +41,7 @@ export class AuthController {
     }
 
     static logout(req: any, res: any) {
-        
+        req.logOut;
+        res.redirect('/home');
     }
 }

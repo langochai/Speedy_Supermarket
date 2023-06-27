@@ -6,12 +6,13 @@ import path from "path";
 
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
+        let username = req.user.username
         let search = await AdminManagement.adminSearchProduct(req, res)
         let productList = await Product
             .find(search)
             .populate('category', 'name', Category)
             .populate('status', 'name', Status);
-        res.render('admin/adminHomePage.ejs', {productList: productList})
+        res.render('admin/adminHomePage.ejs', {productList,username})
     }
 
     static async getAdminAddProduct(req, res) {

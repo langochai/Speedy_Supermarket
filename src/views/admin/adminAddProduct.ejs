@@ -139,13 +139,14 @@
                 <td><input type="number" name="discount"></td>
             </tr>
             <tr>
-                <td>Image:</td>
+                <td>
                 <!-- <td><input type="file" name="image" accept="image/*"></td> -->
-                <div class="control-group">
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Image"/>
-                    <div id="imgDiv"></div>
-                    <input type="file" id="fileButton" onchange="uploadImage(event)">
-                </div>
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="image" name="image" hidden placeholder="Image"/>
+                        <div id="imgDiv"></div>
+                        <input type="file" id="fileButton" onchange="uploadImage(event)">
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>Category:</td>

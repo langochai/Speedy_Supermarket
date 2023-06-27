@@ -2,8 +2,9 @@ import passport from "passport";
 import * as passportLocal from 'passport-local';
 const LocalStrategy = passportLocal.Strategy;
 import { User } from '../schemas/user.schemas/user.model';
+import { Cart } from "../schemas/user.schemas/cart.model";
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
-import { PORT } from "../../index";
+import {PORT} from "../../config"
 
 passport.use(new LocalStrategy(
     { usernameField: 'username', passwordField: 'password' }, async (username, password, done) => {
@@ -42,13 +43,14 @@ passport.use(new GoogleStrategy({
         try {
             const existingUser = await User.findOne({ 'google.id': profile.id });
             if (existingUser) return done(null, existingUser);
+            const newCart = await new Cart({ detail: [], purchased: false }).save(); //check detail later
             const newUser = await new User({
                 google: { id: profile.id },
                 username: profile.emails[0].value,
                 password: null,
+                cart: newCart,
                 role: "normalUser"
             }).save();
-
             return done(null, newUser);
         } catch (err) {
             return done(null, false);

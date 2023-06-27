@@ -52,10 +52,12 @@
 		            </div>
 		            <div class="form-group">
 		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign Up</button>
-							<% if (alertUsernameExisted) { %>
-							<p style="color: red;">Username existed</p>
-							<% } %>
 		            </div>
+					<div>
+							<% if (alertUsernameExisted) { %>
+								<p style="color: red;">Username existed</p>
+								<% } %>
+					</div>
 		            <div class="form-group d-md-flex">
 		            	<div class="w-50 text-left">
 			            	<label class="checkbox-wrap checkbox-primary mb-0">Remember Me

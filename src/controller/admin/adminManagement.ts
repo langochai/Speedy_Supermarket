@@ -20,7 +20,7 @@ export class AdminManagement {
     }
 
     static async postAdminAddProduct(req, res) {
-        let {productName, price, quantity, discount, category, status} = req.body
+        let {productName, price, quantity, discount, image, category, status} = req.body
         let newCategory = []
         let newStatus = []
         if (typeof category == typeof "") {
@@ -46,7 +46,8 @@ export class AdminManagement {
             price: +price,
             quantity: +quantity,
             discount: +discount,
-            image: 'uploads/' + productName + price + req.file.originalname,
+            // image: 'uploads/' + productName + price + req.file.originalname,
+            image:image,
             category: newCategory,
             status: newStatus
         }

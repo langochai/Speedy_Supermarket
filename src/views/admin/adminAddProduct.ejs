@@ -18,7 +18,6 @@
             integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
             crossorigin="anonymous"></script>
 
-    <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,13 +36,6 @@
 
     <link href="css/templatemo-pod-talk.css" rel="stylesheet">
 
-    <!--
-
-TemplateMo 584 Pod Talk
-
-https://templatemo.com/tm-584-pod-talk
-
--->
 </head>
 
 <body>
@@ -148,7 +140,12 @@ https://templatemo.com/tm-584-pod-talk
             </tr>
             <tr>
                 <td>Image:</td>
-                <td><input type="file" name="image" accept="image/*"></td>
+                <!-- <td><input type="file" name="image" accept="image/*"></td> -->
+                <div class="control-group">
+                    <input type="text" class="form-control" id="image" name="image" placeholder="Image"/>
+                    <div id="imgDiv"></div>
+                    <input type="file" id="fileButton" onchange="uploadImage(event)">
+                </div>
             </tr>
             <tr>
                 <td>Category:</td>
@@ -281,8 +278,57 @@ https://templatemo.com/tm-584-pod-talk
     </footer>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDxG2vMNkqz1sf4UGAaMzcaq3lVdAN5C8M",
+        authDomain: "users-8f542.firebaseapp.com",
+        projectId: "users-8f542",
+        storageBucket: "users-8f542.appspot.com",
+        messagingSenderId: "351740883393",
+        appId: "1:351740883393:web:b9c6a3bba9f040cf3ebf40",
+        measurementId: "G-KN5Q9HHHL7"
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
 
-<!-- JAVASCRIPT FILES -->
+<script type="text/javascript">
+    function uploadImage(e) {
+        let fbBucketName = 'images';
+        let uploader = document.getElementById('uploader');
+        let file = e.target.files[0];
+        let storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+        let uploadTask = storageRef.put(file);
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+            function (snapshot) {
+              console.log(snapshot);
+                uploader.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED:
+                        break;
+                    case firebase.storage.TaskState.RUNNING:
+                        break;
+                }
+            }, function (error) {
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        break;
+                    case 'storage/canceled':
+                        break;
+                    case 'storage/unknown':
+                        break;
+                }
+            }, async function () {
+                let downloadURL = await uploadTask.snapshot.downloadURL;
+                console.log(downloadURL);
+                document.getElementById('imgDiv').innerHTML = `<img height="200px", width="200px" src="${downloadURL}" alt="">`
+                document.getElementById('image').value = downloadURL;
+                check();
+            });
+    }
+</script>
+
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/owl.carousel.min.js"></script>
@@ -291,4 +337,4 @@ https://templatemo.com/tm-584-pod-talk
 
 </body>
 
-</html>
+</html> -->

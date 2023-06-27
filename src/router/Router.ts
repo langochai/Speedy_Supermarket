@@ -5,7 +5,10 @@ import {router as AuthRouter} from "./auth.router"
 import {AuthenticateMiddleware} from "../middlewares/authenticateMiddleware";
 
 export const Router = (app)=>{
-    app.use("/home",HomeRouter);
+    app.get("/",(req, res)=>{
+        res.redirect("/home")
+    });
+    app.use("/home", HomeRouter);
     app.use("/auth", AuthRouter)
     app.use("/search", SearchRouter);
     app.use(AuthenticateMiddleware.checkUser)

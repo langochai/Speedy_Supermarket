@@ -15,7 +15,7 @@ export class SignupController {
         const newRole = new Role({
             name: 'normalUser',
         });
-        const newCart = new Cart({
+        const newCart = new Cart({  //! add new cart
             detail: [], // checklater
             purchased: false,
         });

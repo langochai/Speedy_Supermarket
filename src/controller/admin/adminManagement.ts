@@ -6,16 +6,13 @@ import path from "path";
 
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
-        let username = req.user.username || undefined
+        let username = req.user.username
         let search = await AdminManagement.adminSearchProduct(req, res)
         let productList = await Product
             .find(search)
             .populate('category', 'name', Category)
             .populate('status', 'name', Status);
-        res.render('admin/adminHomePage.ejs', {productList, username})
-        console.log(username);
-        console.log(productList);
-        
+        res.render('admin/adminHomePage.ejs', {productList,username})
     }
 
     static async getAdminAddProduct(req, res) {
@@ -23,7 +20,7 @@ export class AdminManagement {
     }
 
     static async postAdminAddProduct(req, res) {
-        let {productName, price, quantity, discount, category, status} = req.body
+        let {productName, price, quantity, discount, image, category, status} = req.body
         let newCategory = []
         let newStatus = []
         if (typeof category == typeof "") {
@@ -49,7 +46,8 @@ export class AdminManagement {
             price: +price,
             quantity: +quantity,
             discount: +discount,
-            image: 'uploads/' + productName + price + req.file.originalname,
+            // image: 'uploads/' + productName + price + req.file.originalname,
+            image:image,
             category: newCategory,
             status: newStatus
         }

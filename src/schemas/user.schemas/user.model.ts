@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 interface IUser {
+    google: { id: { type: string } },
     username: string;
     password: string;
     cart: object[];
@@ -8,6 +9,7 @@ interface IUser {
 }
 
 const userSchema = new Schema<IUser>({
+    google: { id: { type: String, } },
     username: String,
     password: String,
     cart: [{ type: Schema.Types.ObjectId, ref: 'Cart' }],

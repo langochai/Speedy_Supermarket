@@ -1,14 +1,15 @@
-import { User } from '../schemas/user.schemas/user.model';
-import { Cart } from '../schemas/user.schemas/cart.model';
+import {User} from '../schemas/user.schemas/user.model';
+import {Cart} from '../schemas/user.schemas/cart.model';
 
 export class HomeController {
     static async showHome(req: any, res: any) {
-        if(req.user){
+        if (req.user) {
             req.user = await User.findById(req.user._id)
-                .populate({ path: 'cart', select: 'detail purchased -_id', model: Cart });
+                .populate({path: 'cart', select: 'detail purchased -_id', model: Cart});
+            if (req.user.role === "admin") return res.redirect("/admin")
         }
         let username = '';
         if (req.user) username = req.user.username;
-        res.render("index", { username });
+        res.render("index", {username});
     }
 }

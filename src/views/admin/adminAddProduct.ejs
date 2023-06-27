@@ -140,7 +140,12 @@
             </tr>
             <tr>
                 <td>Image:</td>
-                <td><input type="file" name="image" accept="image/*"></td>
+                <!-- <td><input type="file" name="image" accept="image/*"></td> -->
+                <div class="control-group">
+                    <input type="text" class="form-control" id="image" name="image" placeholder="Image"/>
+                    <div id="imgDiv"></div>
+                    <input type="file" id="fileButton" onchange="uploadImage(event)">
+                </div>
             </tr>
             <tr>
                 <td>Category:</td>
@@ -273,6 +278,56 @@
     </footer>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDxG2vMNkqz1sf4UGAaMzcaq3lVdAN5C8M",
+        authDomain: "users-8f542.firebaseapp.com",
+        projectId: "users-8f542",
+        storageBucket: "users-8f542.appspot.com",
+        messagingSenderId: "351740883393",
+        appId: "1:351740883393:web:b9c6a3bba9f040cf3ebf40",
+        measurementId: "G-KN5Q9HHHL7"
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
+
+<script type="text/javascript">
+    function uploadImage(e) {
+        let fbBucketName = 'images';
+        let uploader = document.getElementById('uploader');
+        let file = e.target.files[0];
+        let storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+        let uploadTask = storageRef.put(file);
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+            function (snapshot) {
+              console.log(snapshot);
+                uploader.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED:
+                        break;
+                    case firebase.storage.TaskState.RUNNING:
+                        break;
+                }
+            }, function (error) {
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        break;
+                    case 'storage/canceled':
+                        break;
+                    case 'storage/unknown':
+                        break;
+                }
+            }, async function () {
+                let downloadURL = await uploadTask.snapshot.downloadURL;
+                console.log(downloadURL);
+                document.getElementById('imgDiv').innerHTML = `<img height="200px", width="200px" src="${downloadURL}" alt="">`
+                document.getElementById('image').value = downloadURL;
+                check();
+            });
+    }
+</script>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>

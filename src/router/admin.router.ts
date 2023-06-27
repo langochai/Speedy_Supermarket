@@ -1,7 +1,6 @@
 import {AdminManagement} from "../controller/admin/adminManagement";
 import express from 'express';
 import multer from 'multer';
-import { Authorize } from "../middlewares/author";
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, 'public/index/uploads/');
@@ -12,13 +11,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 export const router = express.Router();
-router.use((req, res)=>{
-    console.log(req.user);
-    
-})
-router.use(Authorize.authorizeAdmin)
 router.get("/", AdminManagement.showAdminHomePage);
-
 router.get("/product/add/",AdminManagement.getAdminAddProduct)
 router.post("/product/add/",upload.single('image'),AdminManagement.postAdminAddProduct)
 router.get("/product/update/:id",AdminManagement.getAdminUpdateProduct)

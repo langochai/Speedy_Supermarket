@@ -6,12 +6,13 @@ import path from "path";
 
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
+        let username = req.user.username
         let search = await AdminManagement.adminSearchProduct(req, res)
         let productList = await Product
             .find(search)
             .populate('category', 'name', Category)
             .populate('status', 'name', Status);
-        res.render('admin/adminHomePage.ejs', {productList: productList})
+        res.render('admin/adminHomePage.ejs', {productList,username})
     }
 
     static async getAdminAddProduct(req, res) {
@@ -139,14 +140,16 @@ export class AdminManagement {
         res.redirect('/admin');
     }
     static async getAdminDeleteProduct(req,res){
-        let id = req.params.id
+        let id = req.params.id;
         let product = await Product.findById(id).catch(err=>{
             if(err) res.redirect("/admin")
         })
         res.render("admin/adminDeleteProduct.ejs",{product})
     }
     static async postAdminDeleteProduct(req,res){
-
+        let id = req.params.id;
+        await Product.deleteOne({_id:id})
+        res.redirect("/admin")
     }
 
     static async adminSearchProduct(req, res) {

@@ -9,6 +9,8 @@ export class HomeController {
         }
         let username = '';
         if (req.user) username = req.user.username;
-        res.render("index", { username });        
+        res.render("index", { username });  
+        console.log(req.user.role);
+              
     }
 }

@@ -17,7 +17,6 @@ app.set('views', path.join(__dirname,'../src/views'));
 
 app.use(express.static("./public/index"))
 app.use(express.static("./public/login"))
-app.use(express.static("./public/showListProduct"))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

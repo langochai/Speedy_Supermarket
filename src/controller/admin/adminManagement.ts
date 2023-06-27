@@ -139,14 +139,16 @@ export class AdminManagement {
         res.redirect('/admin');
     }
     static async getAdminDeleteProduct(req,res){
-        let id = req.params.id
+        let id = req.params.id;
         let product = await Product.findById(id).catch(err=>{
             if(err) res.redirect("/admin")
         })
         res.render("admin/adminDeleteProduct.ejs",{product})
     }
     static async postAdminDeleteProduct(req,res){
-
+        let id = req.params.id;
+        await Product.deleteOne({_id:id})
+        res.redirect("/admin")
     }
 
     static async adminSearchProduct(req, res) {

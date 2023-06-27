@@ -5,9 +5,8 @@ import { Router } from "./src/router/Router";
 import path from "path";
 import passport from './src/middlewares/auth.middleware';
 import session from 'express-session';
-import 'dotenv/config';
 const app = express();
-export const PORT: number = +process.env.PORT ||8080;
+import {PORT} from "./config";
 Database.connectDB()
     .then(() => console.log('DB Connected!'))
     .catch(error => console.log('DB connection error:', error.message));

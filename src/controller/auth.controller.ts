@@ -19,7 +19,6 @@ export class AuthController {
             const { username, password } = req.body;
             const hashedPassword = await bcrypt.hash(password, 10);
             const usernameExists = await User.exists({ username });
-            console.log(req.body, hashedPassword, usernameExists)
 
             if (usernameExists) return res.render('signup', { alertUsernameExisted: true });
 

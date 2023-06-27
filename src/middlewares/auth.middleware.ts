@@ -1,20 +1,23 @@
 import passport from "passport";
-import * as passportLocal from 'passport-local';
-const LocalStrategy = passportLocal.Strategy;
 import { User } from '../schemas/user.schemas/user.model';
 import { Cart } from "../schemas/user.schemas/cart.model";
+import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
+import bcrypt from 'bcrypt';
 import {PORT} from "../../config"
 
 passport.use(new LocalStrategy(
-    { usernameField: 'username', passwordField: 'password' }, async (username, password, done) => {
+    async (username, password, done) => {
         try {
-            const user = await User.findOne({ username });
-            if (!user) return done(null, false, { message: 'Incorrect username and password' });
-            if (user.password !== password) return done(null, false, { message: 'Incorrect username and password' });
+            const user = await User.findOne({ username: username });
+            if (!user) return done(null, false);
+
+            const isValidPassword = await bcrypt.compare(password, user.password);
+            if (!isValidPassword) return done(null, false);
+
             return done(null, user);
-        } catch (error) {
-            return done(error);
+        } catch (err) {
+            return done(err);
         }
     }
 ));
@@ -43,14 +46,15 @@ passport.use(new GoogleStrategy({
         try {
             const existingUser = await User.findOne({ 'google.id': profile.id });
             if (existingUser) return done(null, existingUser);
-            const newCart = await new Cart({ detail: [], purchased: false }).save(); //check detail later
-            const newUser = await new User({
+
+            const newCart = await Cart.create({ detail: [], purchased: false }); //check detail later
+            const newUser = await User.create({
                 google: { id: profile.id },
                 username: profile.emails[0].value,
                 password: null,
                 cart: newCart,
                 role: "normalUser"
-            }).save();
+            });
             return done(null, newUser);
         } catch (err) {
             return done(null, false);

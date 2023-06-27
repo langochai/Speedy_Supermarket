@@ -4,6 +4,7 @@ const LocalStrategy = passportLocal.Strategy;
 import { User } from '../schemas/user.schemas/user.model';
 import { Cart } from "../schemas/user.schemas/cart.model";
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
+import {PORT} from "../../config"
 
 passport.use(new LocalStrategy(
     { usernameField: 'username', passwordField: 'password' }, async (username, password, done) => {
@@ -35,7 +36,7 @@ passport.deserializeUser((id: any, done) => {
 passport.use(new GoogleStrategy({
     clientID: "683585484602-2mhlp32eihlmj618k795gkctm7cp06v9.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: `http://localhost:8080/auth/google/callback`,
+    callbackURL: `http://localhost:${PORT}/auth/google/callback`,
     passReqToCallback: true
 },
     async (request: any, accessToken: any, refreshToken: any, profile: any, done: any) => {

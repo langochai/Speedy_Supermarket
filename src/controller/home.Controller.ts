@@ -1,5 +1,8 @@
 import {User} from '../schemas/user.schemas/user.model';
 import {Cart} from '../schemas/user.schemas/cart.model';
+import {Product} from "../schemas/product.schemas/product.model";
+import {Category} from "../schemas/product.schemas/category.model";
+import {Status} from "../schemas/product.schemas/status.model";
 
 export class HomeController {
     static async showHome(req: any, res: any) {
@@ -10,6 +13,22 @@ export class HomeController {
         }
         let username = '';
         if (req.user) username = req.user.username;
-        res.render("index", {username});
+        let productList = await Product
+            .find()
+            .populate('category', 'name', Category)
+            .populate('status', 'name', Status);
+        let productDiscountList = productList.filter(product=>{
+            for (let i = 0; i < product.status.length; i++) {
+                // @ts-ignore
+                if(product.status[i].name==="discount") return product
+            }
+        })
+        let productTrendingList = productList.filter(product=>{
+            for (let i = 0; i < product.status.length; i++) {
+                // @ts-ignore
+                if(product.status[i].name==="trending") return product
+            }
+        })
+        res.render("index", {username,productList,productDiscountList,productTrendingList});
     }
 }

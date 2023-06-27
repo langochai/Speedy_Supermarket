@@ -29,6 +29,24 @@ export class HomeController {
                 if(product.status[i].name==="trending") return product
             }
         })
-        res.render("index", {username,productList,productDiscountList,productTrendingList});
+        let numberOfCarousel = 6
+        let productRandomList = HomeController.getRandomProduct(productList,numberOfCarousel)
+        res.render("index", {username,productList,productDiscountList,productTrendingList,productRandomList});
+    }
+    static getRandomProduct(arr:any[],count:number){
+        let shuffled = arr.slice(0);
+        let i = arr.length;
+        let min = i - count;
+        let temp: any;
+        let index: number;
+
+        while (i-- > min) {
+            index = Math.floor((i + 1) * Math.random());
+            temp = shuffled[index];
+            shuffled[index] = shuffled[i];
+            shuffled[i] = temp;
+        }
+
+        return shuffled.slice(min);
     }
 }

@@ -35,6 +35,8 @@
             </tr>
         </thead>
         <tbody>
+            
+
             <% if (typeof user !=='undefined' ) {%>
                 <tr>
                     <th scope="row">1</th>
@@ -50,7 +52,19 @@
                 <tr>
                     <th scope="row"><%= count %></th>
                     <td> <%= user.username %></td>
-                    <td> <%= user.role %></td>
+                    <td> 
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            <%= user.role %> 
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/admin/user/role/normalUser/?id=<%= user.id %>">Normal user</a>
+                            <a class="dropdown-item" href="/admin/user/role/vip1/?id=<%= user.id %>">Vip 1</a>
+                            <a class="dropdown-item" href="/admin/user/role/vip2/?id=<%= user.id %>">Vip 2</a>
+                            <a class="dropdown-item" href="/admin/user/role/vip3/?id=<%= user.id %>">Vip 3</a>
+                        </div>
+                    </div>
+                    </td>
                     <td><a href="/admin/user/id/<%= user.id %>">Carts</a></td>
                 </tr>
                 <% count++ %>

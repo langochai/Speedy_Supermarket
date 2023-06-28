@@ -134,41 +134,20 @@
                 <div class="row">
                     <div class="col-lg-12 col-12">
                         <div class="text-center mb-5 pb-2">
-                            <h1 class="text-white">Listen to Pod Talk</h1>
-
+                            <h1 class="text-white">SuperMarket</h1>
                             <p class="text-white">Listen it everywhere. Explore your fav podcasts.</p>
-
                             <a href="#section_2" class="btn custom-btn smoothscroll mt-3">Start listening</a>
                         </div>
 
                         <div class="owl-carousel owl-theme">
                             <%productRandomList.forEach(product=>{%>
-                                <div class="owl-carousel-info-wrap item">
-                                    <img src="<%=product.image%>" width="300px" height="500px"
+                                <div class="owl-carousel-info-wrap item" style="min-height: 300px;">
+                                    <img src="<%=product.image%>" style="width: 300px;"
                                          class="owl-carousel-image img-fluid" alt="">
-
-                                    <div class="owl-carousel-info">
+                                         <div class="owl-carousel-info">
                                         <h4 class="mb-2">
-                                            <%=product.name%>
-                                            <img src="images/verified.png" class="owl-carousel-verified-image img-fluid"
-                                                 alt="">
+                                            <%= product.name %>
                                         </h4>
-
-                                        <span class="badge">Storytelling</span>
-
-                                        <span class="badge">Business</span>
-                                    </div>
-
-                                    <div class="social-share">
-                                        <ul class="social-icon">
-                                            <li class="social-icon-item">
-                                                <a href="#" class="social-icon-link bi-twitter"></a>
-                                            </li>
-
-                                            <li class="social-icon-item">
-                                                <a href="#" class="social-icon-link bi-facebook"></a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div>
                            <% })%>
@@ -198,7 +177,7 @@
                     </div>
 
                     <% productTrendingList.forEach(item => { %>
-                        <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                        <div class="col-lg-4 col-12 mb-4 mb-lg-0 mt-3">
                             <div class="custom-block custom-block-full" style="min-height: 490px;">
                                 <div class="custom-block-image-wrap">
                                     <a href="detail-page.html">
@@ -230,15 +209,15 @@
                                         </a>
                                     </div>
                                 </div>
-
-                                <div class="social-share d-flex flex-column ms-auto">
-                                    <a href="#" class="badge ms-auto">
-                                        <i class="bi-heart"></i>
-                                    </a>
-
-                                    <a href="#" class="badge ms-auto">
-                                        <i class="bi-bookmark"></i>
-                                    </a>
+                                <br>
+                                <div>
+                                    <button class="btn btn-outline-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                            <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                        </svg>
+                                        <span>Add To Cart</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -270,7 +249,7 @@
                     </div>
 
                     <% productDiscountList.forEach(item => { %>
-                    <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                    <div class="col-lg-4 col-12 mb-4 mb-lg-0 mt-3">
                         <div class="custom-block custom-block-full" style="min-height: 490px;">
                             <div class="custom-block-image-wrap">
                                 <a href="detail-page.html">
@@ -298,14 +277,16 @@
                                         <span>924k</span>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="social-share d-flex flex-column ms-auto">
-                                <a href="#" class="badge ms-auto">
-                                    <i class="bi-heart"></i>
-                                </a>
-                                <a href="#" class="badge ms-auto">
-                                    <i class="bi-bookmark"></i>
-                                </a>
+                                <br>
+                                <div>
+                                    <button class="btn btn-outline-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                            <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                        </svg>
+                                        <span>Add To Cart</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -334,7 +315,7 @@
                     </div>
 
                     <% productList.forEach(item => { %>
-                    <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                    <div class="col-lg-4 col-12 mb-4 mb-lg-0 mt-3">
                         <div class="custom-block custom-block-full" style="min-height: 490px;">
                             <div class="custom-block-image-wrap">
                                 <a href="detail-page.html">
@@ -366,16 +347,16 @@
                                     </a>
                                 </div>
                             </div>
-
-                            <div class="social-share d-flex flex-column ms-auto">
-                                <a href="#" class="badge ms-auto">
-                                    <i class="bi-heart"></i>
-                                </a>
-
-                                <a href="#" class="badge ms-auto">
-                                    <i class="bi-bookmark"></i>
-                                </a>
-                            </div>
+                            <br>
+                                <div>
+                                    <button class="btn btn-outline-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                            <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                        </svg>
+                                        <span>Add To Cart</span>
+                                    </button>
+                                </div>
                         </div>
                     </div>
                     <% }) %>

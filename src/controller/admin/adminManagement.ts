@@ -1,7 +1,7 @@
+import { Status } from './../../schemas/product.schemas/status.model';
 import { User } from './../../schemas/user.schemas/user.model';
 import {Product} from "../../schemas/product.schemas/product.model";
 import {Category} from "../../schemas/product.schemas/category.model";
-import {Status} from "../../schemas/product.schemas/status.model";
 import * as fs from "fs";
 import path from "path";
 
@@ -102,7 +102,7 @@ export class AdminManagement {
         let newQuantity = quantity === "" ? product.quantity : quantity
         let newDiscount = discount === "" ? product.discount : discount
         let newImage = req.file ? "uploads/" + newName + newPrice + req.file.originalname : image;
-        
+
         let newCategory = req.body.category ? req.body.category : category;
         let newStatus = req.body.status ? req.body.status : status;
         let categoryList = []
@@ -139,13 +139,6 @@ export class AdminManagement {
         res.redirect('/admin');
     }
     static async getAdminDeleteProduct(req,res){
-        let id = req.params.id;
-        let product = await Product.findById(id).catch(err=>{
-            if(err) res.redirect("/admin")
-        })
-        res.render("admin/adminDeleteProduct.ejs",{product})
-    }
-    static async postAdminDeleteProduct(req,res){
         let id = req.params.id;
         await Product.deleteOne({_id:id})
         res.redirect("/admin")

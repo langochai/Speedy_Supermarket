@@ -19,5 +19,4 @@ router.post("/product/add/",upload.single('image'),AdminManagement.postAdminAddP
 router.get("/product/update/:id",AdminManagement.getAdminUpdateProduct)
 router.post("/product/update/:id",upload.single('image'),AdminManagement.postAdminUpdateProduct)
 router.get("/product/delete/:id",AdminManagement.getAdminDeleteProduct)
-router.post("/product/delete/:id",AdminManagement.postAdminDeleteProduct)
 router.post("/product/search/:name", AdminManagement.adminSearchProduct)

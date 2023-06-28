@@ -1,7 +1,6 @@
 import { AuthController } from '../controller/auth.controller';
 import express from 'express';
 import passport from '../middlewares/auth.middleware';
-import { HomeController } from '../controller/home.Controller';
 export const router = express.Router();
 router.get("/signup", AuthController.showSignupPage);
 router.post("/signup", AuthController.createAccount);

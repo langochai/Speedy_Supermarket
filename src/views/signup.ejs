@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="en">
+	<base href="/">
   <head>
   	<title>Login 04</title>
     <meta charset="utf-8">
+	<base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
@@ -50,10 +52,12 @@
 		            </div>
 		            <div class="form-group">
 		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign Up</button>
-							<% if (accountInfo) { %>
-							<p style="color: red;">Username existed</p>
-							<% } %>
 		            </div>
+					<div>
+							<% if (alertUsernameExisted) { %>
+								<p style="color: red;">Username existed</p>
+								<% } %>
+					</div>
 		            <div class="form-group d-md-flex">
 		            	<div class="w-50 text-left">
 			            	<label class="checkbox-wrap checkbox-primary mb-0">Remember Me
@@ -66,7 +70,6 @@
 									</div>
 		            </div>
 		          </form>
-		          <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>
 		        </div>
 		      </div>
 				</div>

@@ -1,3 +1,4 @@
+import { User } from './../../schemas/user.schemas/user.model';
 import {Product} from "../../schemas/product.schemas/product.model";
 import {Category} from "../../schemas/product.schemas/category.model";
 import {Status} from "../../schemas/product.schemas/status.model";
@@ -6,11 +7,13 @@ import path from "path";
 
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
+        let username = req.user.username
+        let search = await AdminManagement.adminSearchProduct(req, res)
         let productList = await Product
-            .find()
+            .find(search)
             .populate('category', 'name', Category)
             .populate('status', 'name', Status);
-        res.render('admin/adminHomePage.ejs', {productList: productList})
+        res.render('admin/adminHomePage.ejs', {productList,username})
     }
 
     static async getAdminAddProduct(req, res) {
@@ -18,7 +21,8 @@ export class AdminManagement {
     }
 
     static async postAdminAddProduct(req, res) {
-        let {productName, price, quantity, discount, category, status} = req.body
+        let {productName, price, quantity, discount, image, category, status} = req.body
+        if(!image) image = "uploads/default.png"
         let newCategory = []
         let newStatus = []
         if (typeof category == typeof "") {
@@ -44,7 +48,8 @@ export class AdminManagement {
             price: +price,
             quantity: +quantity,
             discount: +discount,
-            image: 'uploads/' + productName + price + req.file.originalname,
+            // image: 'uploads/' + productName + price + req.file.originalname,
+            image:image,
             category: newCategory,
             status: newStatus
         }
@@ -97,11 +102,8 @@ export class AdminManagement {
         let newPrice = price === "" ? product.price : price
         let newQuantity = quantity === "" ? product.quantity : quantity
         let newDiscount = discount === "" ? product.discount : discount
-        let newImage = req.file ? "uploads/" + newName + newPrice + req.file.originalname : image;
-        if (req.file) await fs.unlink(path.join(__dirname, '../../../../public/index/' + image), (err) => {
-            if (err) console.log(err.message)
-        })
 
+        let newImage = req.body.image ? req.body.image: "uploads/default.png";
         let newCategory = req.body.category ? req.body.category : category;
         let newStatus = req.body.status ? req.body.status : status;
         let categoryList = []
@@ -138,13 +140,28 @@ export class AdminManagement {
         res.redirect('/admin');
     }
     static async getAdminDeleteProduct(req,res){
-        let id = req.params.id
+        let id = req.params.id;
         let product = await Product.findById(id).catch(err=>{
             if(err) res.redirect("/admin")
         })
         res.render("admin/adminDeleteProduct.ejs",{product})
     }
     static async postAdminDeleteProduct(req,res){
+        let id = req.params.id;
+        await Product.deleteOne({_id:id})
+        res.redirect("/admin")
+    }
 
+    static async adminSearchProduct(req, res) {
+        let queryName = {}
+        if (req.query.search) {
+            let search = req.query.search
+            queryName = {
+                name: {
+                    $regex: search
+                }
+            }
+        }
+        return queryName;
     }
 }

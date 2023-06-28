@@ -8,9 +8,6 @@ import path from "path";
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
         let username = req.user.username
-        let users = await User.find({
-            role: {$ne: "admin"}
-        })
         let search = await AdminManagement.adminSearchProduct(req, res)
         let productList = await Product
             .find(search)
@@ -105,10 +102,7 @@ export class AdminManagement {
         let newQuantity = quantity === "" ? product.quantity : quantity
         let newDiscount = discount === "" ? product.discount : discount
         let newImage = req.file ? "uploads/" + newName + newPrice + req.file.originalname : image;
-        if (req.file) await fs.unlink(path.join(__dirname, '../../../../public/index/' + image), (err) => {
-            if (err) console.log(err.message)
-        })
-
+        
         let newCategory = req.body.category ? req.body.category : category;
         let newStatus = req.body.status ? req.body.status : status;
         let categoryList = []

@@ -15,3 +15,5 @@ router.post("/product/search/:name", AdminManagement.adminSearchProduct)
 
 router.get('/user', AdminShowUserList.showUser)
 router.get('/user/id/:id', AdminShowUserList.showCart)
+router.post('/search', AdminShowUserList.search)
+router.get('/search', (req, res) => { res.redirect('user')})

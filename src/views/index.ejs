@@ -40,6 +40,25 @@
         background-color: lightgray;
         padding: 10px;
     }
+
+    .strikethrough {
+  position: relative;
+}
+.strikethrough:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 50%;
+  right: 0;
+  border-top: 1px solid;
+  border-color: inherit;
+  
+  -webkit-transform:rotate(-5deg);
+  -moz-transform:rotate(-5deg);
+  -ms-transform:rotate(-5deg);
+  -o-transform:rotate(-5deg);
+  transform:rotate(-5deg);
+}
 </style>
 <body>
 
@@ -178,54 +197,53 @@
                         </div> 
                     </div>
 
-                    <div class="col-lg-4 col-12 mb-4 mb-lg-0">
-                        <div class="custom-block custom-block-full" style="min-height: 490px;">
-                            <div class="custom-block-image-wrap">
-                                <a href="detail-page.html">
-                                    <img src="https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg" class="custom-block-image img-fluid"
-                                        alt="">
-                                </a>
-                            </div>
-
-                            <div class="custom-block-info">
-                                <h5 class="mb-2">
+                    <% productTrendingList.forEach(item => { %>
+                        <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                            <div class="custom-block custom-block-full" style="min-height: 490px;">
+                                <div class="custom-block-image-wrap">
                                     <a href="detail-page.html">
-                                        Hot
-                                    </a>
-                                </h5>
-
-                                <p class="mb-0">$1000</p>
-
-                                <div class="custom-block-bottom d-flex justify-content-between mt-3">
-                                    <a href="#" class="bi-headphones me-1">
-                                        <span>100k</span>
-                                    </a>
-
-                                    <a href="#" class="bi-heart me-1">
-                                        <span>2.5k</span>
-                                    </a>
-
-                                    <a href="#" class="bi-chat me-1">
-                                        <span>924k</span>
+                                        <img src="<%= item.image%>" class="custom-block-image img-fluid"
+                                            alt="">
                                     </a>
                                 </div>
-                                <div>
-                                    <button class="btn btn-outline-dark">Edit</button>
-                                    <button class="btn btn-outline-info">Delete</button>
+
+                                <div class="custom-block-info">
+                                    <h5 class="mb-2">
+                                        <a href="detail-page.html">
+                                            <%= item.name %>
+                                        </a>
+                                    </h5>
+
+                                    <p class="mb-0">$<%= item.price %></p>
+
+                                    <div class="custom-block-bottom d-flex justify-content-between mt-3">
+                                        <a href="#" class="bi-headphones me-1">
+                                            <span>100k</span>
+                                        </a>
+
+                                        <a href="#" class="bi-heart me-1">
+                                            <span>2.5k</span>
+                                        </a>
+
+                                        <a href="#" class="bi-chat me-1">
+                                            <span>924k</span>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="social-share d-flex flex-column ms-auto">
-                                <a href="#" class="badge ms-auto">
-                                    <i class="bi-heart"></i>
-                                </a>
+                                <div class="social-share d-flex flex-column ms-auto">
+                                    <a href="#" class="badge ms-auto">
+                                        <i class="bi-heart"></i>
+                                    </a>
 
-                                <a href="#" class="badge ms-auto">
-                                    <i class="bi-bookmark"></i>
-                                </a>
+                                    <a href="#" class="badge ms-auto">
+                                        <i class="bi-bookmark"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <% }) %>
+                    
                 </div>
             </div>
         </section>
@@ -251,11 +269,12 @@
                         </div> 
                     </div>
 
+                    <% productDiscountList.forEach(item => { %>
                     <div class="col-lg-4 col-12 mb-4 mb-lg-0">
                         <div class="custom-block custom-block-full" style="min-height: 490px;">
                             <div class="custom-block-image-wrap">
                                 <a href="detail-page.html">
-                                    <img src="images/podcast/27376480_7326766.jpg" class="custom-block-image img-fluid"
+                                    <img src="<%= item.image %>" class="custom-block-image img-fluid"
                                         alt="">
                                 </a>
                             </div>
@@ -263,47 +282,34 @@
                             <div class="custom-block-info">
                                 <h5 class="mb-2">
                                     <a href="detail-page.html">
-                                        Discount
+                                        <%= item.name %>
                                     </a>
                                 </h5>
-
-                                <div class="profile-block d-flex">
-                                    <img src="images/profile/woman-posing-black-dress-medium-shot.jpg"
-                                        class="profile-block-image img-fluid" alt="">
-
-                                    <p>Elsa
-                                        <strong>Influencer</strong>
-                                    </p>
-                                </div>
-
-                                <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
-
+                                
+                                <p><span class="strikethrough">$<%= item.price %></span> $<%= item.price * (100-item.discount) / 100 %></p>
                                 <div class="custom-block-bottom d-flex justify-content-between mt-3">
                                     <a href="#" class="bi-headphones me-1">
                                         <span>100k</span>
                                     </a>
-
                                     <a href="#" class="bi-heart me-1">
                                         <span>2.5k</span>
                                     </a>
-
                                     <a href="#" class="bi-chat me-1">
                                         <span>924k</span>
                                     </a>
                                 </div>
                             </div>
-
                             <div class="social-share d-flex flex-column ms-auto">
                                 <a href="#" class="badge ms-auto">
                                     <i class="bi-heart"></i>
                                 </a>
-
                                 <a href="#" class="badge ms-auto">
                                     <i class="bi-bookmark"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
+                    <% }) %>
                 </div>
             </div>
         </section>
@@ -327,11 +333,12 @@
                         </div> 
                     </div>
 
+                    <% productList.forEach(item => { %>
                     <div class="col-lg-4 col-12 mb-4 mb-lg-0">
                         <div class="custom-block custom-block-full" style="min-height: 490px;">
                             <div class="custom-block-image-wrap">
                                 <a href="detail-page.html">
-                                    <img src="images/podcast/27376480_7326766.jpg" class="custom-block-image img-fluid"
+                                    <img src="<%= item.image %>" class="custom-block-image img-fluid"
                                         alt="">
                                 </a>
                             </div>
@@ -339,20 +346,11 @@
                             <div class="custom-block-info">
                                 <h5 class="mb-2">
                                     <a href="detail-page.html">
-                                        Vintage Show
+                                        <%= item.name %>
                                     </a>
                                 </h5>
 
-                                <div class="profile-block d-flex">
-                                    <img src="images/profile/woman-posing-black-dress-medium-shot.jpg"
-                                        class="profile-block-image img-fluid" alt="">
-
-                                    <p>Elsa
-                                        <strong>Influencer</strong>
-                                    </p>
-                                </div>
-
-                                <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                <p class="mb-0">$<%= item.price %></p>
 
                                 <div class="custom-block-bottom d-flex justify-content-between mt-3">
                                     <a href="#" class="bi-headphones me-1">
@@ -380,6 +378,7 @@
                             </div>
                         </div>
                     </div>
+                    <% }) %>
                 </div>
             </div>
         </section>

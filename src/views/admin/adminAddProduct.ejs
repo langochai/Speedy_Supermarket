@@ -37,7 +37,11 @@
     <link href="css/templatemo-pod-talk.css" rel="stylesheet">
 
 </head>
-
+<style>
+    h1.textwhile {
+        margin-bottom: 200px;
+    }
+</style>
 <body>
 
 <div style="z-index: 1;position: relative">
@@ -102,10 +106,7 @@
                     <div class="col-lg-12 col-12">
                         <div class="text-center mb-5 pb-2">
                             <h1 class="text-white">Listen to Pod Talk</h1>
-
-                            <p class="text-white">Listen it everywhere. Explore your fav podcasts.</p>
-
-                            <a href="#section_2" class="btn custom-btn smoothscroll mt-3">Start listening</a>
+                            <p></p>
                         </div>
                     </div>
 
@@ -120,57 +121,51 @@
 </div>
 
 <div style="z-index: 2;position: relative;margin: 100px">
-    <form action="" method="post" >
-        <table class="table table-success table-striped" style="text-align: center">
-            <tr>
-                <td>Product name:</td>
-                <td><input type="text" name="productName"></td>
-            </tr>
-            <tr>
-                <td>Price:</td>
-                <td><input type="number" name="price"></td>
-            </tr>
-            <tr>
-                <td>Quantity:</td>
-                <td><input type="number" name="quantity"></td>
-            </tr>
-            <tr>
-                <td>Discount:</td>
-                <td><input type="number" name="discount"></td>
-            </tr>
-            <tr>
-                <td>Image:</td>
-                <!-- <td><input type="file" name="image" accept="image/*"></td> -->
-                <td>
-                <div class="control-group">
-                    <input type="text" class="form-control" id="image" name="image" placeholder="Image"/>
-                    <div id="imgDiv"></div>
-                    <input type="file" id="fileButton" onchange="uploadImage(event)">
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Category:</td>
-                <td>
-                    <input type="checkbox" id="clothes" name="category" value="clothes">
-                    <label for="clothes">Clothes</label>
-                    <input type="checkbox" id="food" name="category" value="food">
-                    <label for="food">Food</label>
-                    <input type="checkbox" id="household goods" name="category" value="household goods">
-                    <label for="household goods">Household goods</label>
-                </td>
-            </tr>
-            <tr>
-                <td>Status:</td>
-                <td>
-                    <input type="checkbox" id="discount" name="status" value="discount">
-                    <label for="discount">Discount</label>
-                    <input type="checkbox" id="trending" name="status" value="trending">
-                    <label for="trending">Trending</label>
-                </td>
-            </tr>
-        </table>
-        <button type="submit" class="btn btn-success">Submit</button>
+    <form action="" method="post" style="margin-left: 25%; width: 50%;">
+        <div class="control-group">
+            <input type="text" class="form-control" id="productName" name="productName" placeholder="Tên sản phẩm"/>
+        </div>
+        <br>
+        <div class="control-group">
+            <input type="number" class="form-control" id="price" name="price" placeholder="Giá" min="0"/>
+        </div>
+        <br>
+        <div class="control-group">
+            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Số lượng" min="0"/>
+        </div>
+        <br>
+        <div class="control-group">
+            <input type="number" class="form-control" id="discount" name="discount" placeholder="Giảm giá"/>
+        </div>
+        <br>
+        <td><h5>Category:</h5></td>
+        <td>
+            <input type="checkbox" id="clothes" name="category" value="clothes">
+            <label for="clothes">Clothes</label>
+            <input type="checkbox" id="food" name="category" value="food">
+            <label for="food">Food</label>
+            <input type="checkbox" id="household goods" name="category" value="household goods">
+            <label for="household goods">Household goods</label>
+        </td>
+        <br>
+        <td><h5>Status:</h5></td>
+        <div>
+            <td>
+                <td></td>
+                <input type="checkbox" id="discount" name="status" value="discount">
+                <label for="discount">Discount</label>
+                <input type="checkbox" id="trending" name="status" value="trending">
+                <label for="trending">Trending</label>
+            </td>
+        </div>
+        <br>
+        <div class="control-group">
+            <input type="text" class="form-control" id="image" name="image" placeholder="Image" hidden/>
+            <div id="imgDiv"></div>
+            <input type="file" id="fileButton" onchange="uploadImage(event)">
+        </div>
+        <br>
+        <button type="submit" id="add" class="btn btn-outline-warning" style="width: 100%;" >Thêm sản phẩm</button>
     </form>
 </div>
 
@@ -244,8 +239,9 @@
             <div class="row align-items-center">
 
                 <div class="col-lg-2 col-md-3 col-12">
-                    <a class="navbar-brand" href="index.html">
-                        <img src="images/pod-talk-logo.png" class="logo-image img-fluid" alt="templatemo pod talk">
+                    <a class="navbar-brand me-lg-5 me-0" href="index.html">
+                        <img src="images/logo.png" class="logo-image img-fluid" alt="templatemo pod talk"
+                             style="width: 160px; margin-left: -35px;">
                     </a>
                 </div>
 
@@ -336,7 +332,5 @@
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/custom.js"></script>
 
-
 </body>
-
 </html> -->

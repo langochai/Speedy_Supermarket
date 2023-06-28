@@ -32,6 +32,7 @@ export class HomeController {
         let numberOfCarousel = 6
         let productRandomList = HomeController.getRandomProduct(productList,numberOfCarousel)
         res.render("index", {username,productList,productDiscountList,productTrendingList,productRandomList});
+                
     }
     static getRandomProduct(arr:any[],count:number){
         let shuffled = arr.slice(0);

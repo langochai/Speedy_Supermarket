@@ -1,3 +1,4 @@
+import { User } from './../../schemas/user.schemas/user.model';
 import {Product} from "../../schemas/product.schemas/product.model";
 import {Category} from "../../schemas/product.schemas/category.model";
 import {Status} from "../../schemas/product.schemas/status.model";
@@ -101,8 +102,8 @@ export class AdminManagement {
         let newPrice = price === "" ? product.price : price
         let newQuantity = quantity === "" ? product.quantity : quantity
         let newDiscount = discount === "" ? product.discount : discount
-        let newImage = req.body.image ? req.body.image: "uploads/default.png";
 
+        let newImage = req.body.image ? req.body.image: "uploads/default.png";
         let newCategory = req.body.category ? req.body.category : category;
         let newStatus = req.body.status ? req.body.status : status;
         let categoryList = []

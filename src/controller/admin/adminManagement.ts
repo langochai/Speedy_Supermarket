@@ -1,3 +1,4 @@
+import { User } from './../../schemas/user.schemas/user.model';
 import {Product} from "../../schemas/product.schemas/product.model";
 import {Category} from "../../schemas/product.schemas/category.model";
 import {Status} from "../../schemas/product.schemas/status.model";
@@ -7,6 +8,9 @@ import path from "path";
 export class AdminManagement {
     static async showAdminHomePage(req, res) {
         let username = req.user.username
+        let users = await User.find({
+            role: {$ne: "admin"}
+        })
         let search = await AdminManagement.adminSearchProduct(req, res)
         let productList = await Product
             .find(search)

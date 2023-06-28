@@ -11,4 +11,8 @@ export class AdminShowUserList {
         console.log(user.cart);
         
     }
+    static async search(req, res) {
+        const user = await User.findOne({username: req.body.adminSearch});
+        res.render('admin/adminUserList', { user });
+    }
 }

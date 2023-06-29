@@ -47,7 +47,6 @@ async function productForCart(user_id, productId, request) {
     const index = detail.findIndex(obj => obj.product == product_id);
     if ('id' in request.params) {
         if (index !== -1) {
-            console.log(`ID  đã được tìm thấy trong mảng`);
             //@ts-ignore
             await Cart.findOneAndUpdate({ _id: userCartUnPaid[0]._id },
                 { $inc: { [`detail.${index}.productQuantity`]: 1 } }, 
@@ -58,7 +57,6 @@ async function productForCart(user_id, productId, request) {
                     console.log(error);
                 });
         } else {
-            console.log(`ID  không tìm thấy trong mảng`);
             let newProduct = {
                 product: product_id,
                 productQuantity: 1,
@@ -72,68 +70,17 @@ async function productForCart(user_id, productId, request) {
         };
     } else if ('idDelete' in request.params) {
         if (index !== -1) {
-            console.log(`ID  đã được tìm thấy trong mảng`); 
             //@ts-ignore
              await Cart.findById({ _id: userCartUnPaid[0]._id })
                 .then((cart) => {
                     //@ts-ignore
                     const child = cart.detail.find(child => child.product == product_id);
                     //@ts-ignore
-                    cart.detail.pull(child); // Sử dụng push() để thêm đối tượng vào mảng
-                    console.log("đã xóa thành công");
+                    cart.detail.pull(child);;
                     cart.save(); 
                 })
-        } else {
-            console.log(`ID  không tìm thấy trong mảng`);
         };
     }
-}
-async function changeProductQuantity(user_id, request, inOrDe) {
-    let product_id = "64991567ed2bb8ab40e44615"; 
-    let userCartUnPaid = await getCartByUserAndPurchaseStatus(user_id, false);
-    let test;
-    if (inOrDe == "true") {
-        test = 1; 
-    } else {
-        test = -1; //giảm
-    }
-    //@ts-ignore
-    const detail = userCartUnPaid[0].detail
-    const index = detail.findIndex(obj => obj.product == product_id);
-    if (index !== -1) {
-        console.log(`ID  đã được tìm thấy trong mảng`);
-        //@ts-ignore
-        await Cart.findOneAndUpdate({ _id: userCartUnPaid[0]._id },
-            { $inc: { [`detail.${index}.productQuantity`]: test } }, 
-            { new: true }
-        ).then((updatedCart) => {
-        })
-            .catch((error) => {
-                console.log(error);
-            });
-    } else {
-        console.log(`ID  không tìm thấy trong mảng`);
-
-    };
-}
-async function purchase(cart_id) {
-    try {
-        const cart = await Cart.findOne({ _id: cart_id });
-        if (cart) {
-            console.log('Cart found');
-            await Cart.updateOne(
-                { _id: cart_id },
-                { $set: { purchased: true } },
-                { upsert: false }
-            )
-        } else {
-            console.log('Cart not found');
-        }
-    } catch (error) {
-        console.error('Error occurred:', error);
-        console.log("Id cart không đúng định dạng");
-    }
-
 }
 export class CartController {
     static async showCart(req, res) {
@@ -158,12 +105,5 @@ export class CartController {
             console.log(error);
             res.redirect('/home')
         }
-
-    }
-    static async changeProductQuantity(req, res) {
-        changeProductQuantity(req.user._id, req, req.params.check)
-    }
-    static async purchase(req, res) {
-        purchase(req.params.cartID)
     }
 }

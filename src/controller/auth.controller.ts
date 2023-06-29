@@ -38,7 +38,11 @@ export class AuthController {
     }
 
     static async signin(req: any, res: any) {
-        passport.authenticate('local');
+        if (req.isAuthenticated()){
+            passport.authenticate('local');
+        } else {
+            res.render('signin', { alertWrongAccountInfo: true, alertSignupSuccess : false});
+        }
     }
 
     static logout(req: any, res: any) {

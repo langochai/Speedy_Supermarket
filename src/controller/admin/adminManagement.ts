@@ -103,7 +103,7 @@ export class AdminManagement {
         let newQuantity = quantity === "" ? product.quantity : quantity
         let newDiscount = discount === "" ? product.discount : discount
 
-        let newImage = req.body.image ? req.body.image: "uploads/default.png";
+        let newImage = req.body.image ? req.body.image: image;
         let newCategory = req.body.category ? req.body.category : category;
         let newStatus = req.body.status ? req.body.status : status;
         let categoryList = []

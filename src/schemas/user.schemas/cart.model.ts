@@ -6,7 +6,7 @@ interface ICart {
 }
 
 const detailSchema = new Schema({
-    productName: String,
+    product: { type: Schema.Types.ObjectId, ref: 'Product' },
     productQuantity: Number,
 });
 

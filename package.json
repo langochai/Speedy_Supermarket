@@ -6,11 +6,12 @@
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "fs": "^0.0.1-security",
     "express-session": "^1.17.3",
+    "fs": "^0.0.1-security",
     "mongoose": "^7.3.1",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
+    "nodemon": "^2.0.22",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
@@ -23,7 +24,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
-    "start:dev": "rimraf dist && tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\""
+    "start:dev": "rimraf dist && tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\"",
+    "dev": "rimraf dist && tsc-watch -p tsconfig.build.json --onSuccess \"nodemon dist/index.js\""
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +38,7 @@
     "@types/passport-google-oauth2": "^0.1.5",
     "@types/passport-local": "^1.0.35",
     "rimraf": "^5.0.1",
+    "ts-node-dev": "^2.0.0",
     "tsc": "^2.0.4",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.1.3"

@@ -13,11 +13,11 @@ export class AdminManagement {
             .find(search)
             .populate('category', 'name', Category)
             .populate('status', 'name', Status);
-        res.render('admin/adminHomePage.ejs', {productList,username})
-    }
-
-    static async getAdminAddProduct(req, res) {
-        res.render('admin/adminAddProduct.ejs')
+            productList.reverse()
+            let categories = await Category.find();
+            let statuses = await Status.find();
+            
+        res.render('admin/adminHomePage.ejs', {productList,username,categories,statuses})
     }
 
     static async postAdminAddProduct(req, res) {
@@ -47,11 +47,11 @@ export class AdminManagement {
             price: +price,
             quantity: +quantity,
             discount: +discount,
-            // image: 'uploads/' + productName + price + req.file.originalname,
             image:image,
             category: newCategory,
             status: newStatus
         }
+        
         let addProduct = new Product(newProduct);
         await addProduct.save()
         res.redirect('/admin')
@@ -85,15 +85,15 @@ export class AdminManagement {
             }
             if (flag) return item
         });
-        res.render('admin/adminUpdateProduct', {product, category, categoryFilter, status, statusFilter});
+        // res.render('admin/adminUpdateProduct', {product, category, categoryFilter, status, statusFilter});
+        res.json(product)
     }
 
     static async postAdminUpdateProduct(req, res) {
         let product = await Product
             .findById(req.params.id)
             .populate('category', {name: 1, _id: 0}, Category)
-            .populate('status', {name: 1, _id: 0}, Status);
-
+            .populate('status', {name: 1, _id: 0}, Status);  
         let {productName, price, quantity, discount} = req.body;
         let {image, category, status} = product;
 
@@ -135,7 +135,9 @@ export class AdminManagement {
             category: categoryList,
             status: statusList
         };
-        await Product.updateOne({_id: product._id}, updatedProduct)
+        await Product.updateOne({_id: product._id}, updatedProduct).catch(err=>{
+            if(err) console.log(err.message);
+        })
         res.redirect('/admin');
     }
     static async getAdminDeleteProduct(req,res){

@@ -9,6 +9,6 @@ router.get("/googleSignIn", passport.authenticate('google', { scope: ['profile',
 router.get("/google/callback", passport.authenticate('google'), (req, res) => { res.redirect('/home') });
 
 router.get("/signin", AuthController.alertControl, AuthController.showFormSignin);
-router.post('/signin', passport.authenticate('local'), (req,res)=>{res.redirect('/home')});
+router.post('/signin', AuthController.signin);
 
 router.get('/logout', AuthController.logout);

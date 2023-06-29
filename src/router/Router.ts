@@ -1,16 +1,17 @@
-import {router as HomeRouter} from "./home.router";
-import {router as SearchRouter} from "./search.router";
-import {router as AdminRouter} from "./admin.router";
-import {router as AuthRouter} from "./auth.router"
-import {AuthenticateMiddleware} from "../middlewares/authenticateMiddleware";
-
-export const Router = (app)=>{
-    app.get("/",(req, res)=>{
+import { router as HomeRouter } from "./home.router";
+import { router as SearchRouter } from "./search.router";
+import { router as AdminRouter } from "./admin.router";
+import { router as CartRouter } from "./cart.router";
+import { router as AuthRouter } from "./auth.router"
+import { AuthenticateMiddleware } from "../middlewares/authenticateMiddleware";
+export const Router = (app) => {
+    app.get("/", (req, res) => {
         res.redirect("/home")
     });
+    app.use('/cart', CartRouter);
     app.use("/home", HomeRouter);
     app.use("/auth", AuthRouter)
     app.use("/search", SearchRouter);
     app.use(AuthenticateMiddleware.checkUser)
-    app.use("/admin",AdminRouter);
+    app.use("/admin", AdminRouter);
 }

@@ -3,37 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/admin">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 70%;">
+        <form class="form-inline my-2 my-lg-0" action="/admin/search" method="post">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search By Name" aria-label="Search" name="adminSearch">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">STT</th>
                 <th scope="col">username</th>
                 <th scope="col">Role</th>
-                <th scope="col">Carts</th>
+                <th scope="col">User carts</th>
             </tr>
         </thead>
         <tbody>
+            
+
+            <% if (typeof user !=='undefined' ) {%>
+                <tr>
+                    <th scope="row">1</th>
+                    <td><%= user.username %></td>
+                    <td><%= user.role %></td>
+                    <td><a href="/admin/user/id/<%= user.id %>">Carts</a></td>
+                </tr>
+            <% } %>
+
+            <% if (typeof users !== 'undefined') {%>
             <% let count = 1 %>
             <% users.forEach(user =>{ %>
                 <tr>
                     <th scope="row"><%= count %></th>
                     <td> <%= user.username %></td>
-                    <td> <%= user.role %></td>
+                    <td> 
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            <%= user.role %> 
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/admin/user/role/normalUser/?id=<%= user.id %>">Normal user</a>
+                            <a class="dropdown-item" href="/admin/user/role/vip1/?id=<%= user.id %>">Vip 1</a>
+                            <a class="dropdown-item" href="/admin/user/role/vip2/?id=<%= user.id %>">Vip 2</a>
+                            <a class="dropdown-item" href="/admin/user/role/vip3/?id=<%= user.id %>">Vip 3</a>
+                        </div>
+                    </div>
+                    </td>
                     <td><a href="/admin/user/id/<%= user.id %>">Carts</a></td>
                 </tr>
                 <% count++ %>
             <% }) %>
+            <% } %>
         </tbody>
     </table>
+
+
+    <!-- <div
+        class="position-relative d-flex flex-items-center pb-2 f6 color-fg-muted border-top color-border-muted flex-column-reverse flex-lg-row flex-wrap flex-lg-nowrap mt-6 pt-6">
+        <div
+            class="list-style-none d-flex flex-wrap col-0 col-lg-2 flex-justify-start flex-lg-justify-between mb-2 mb-lg-0">
+            <div class="mt-2 mt-lg-0 d-flex flex-items-center">
+                <a aria-label="Homepage" title="GitHub" class="footer-octicon mr-2" href="https://github.com">
+                    <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24"
+                        data-view-component="true" class="octicon octicon-mark-github">
+                        <path
+                            d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z">
+                        </path>
+                    </svg>
+                </a> <span>
+                    © 2023 GitHub, Inc.
+                </span>
+            </div>
+        </div>
     
-
-
-
+        <nav aria-label="Footer" class="col-12 col-lg-8">
+            <h3 class="sr-only" id="sr-footer-heading">Footer navigation</h3>
+            <ul class="list-style-none d-flex flex-wrap col-12 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0"
+                aria-labelledby="sr-footer-heading">
+                <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/site-policy/github-terms/github-terms-of-service"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to terms&quot;,&quot;label&quot;:&quot;text:terms&quot;}">Terms</a>
+                </li>
+                <li class="mr-3 mr-lg-0"><a
+                        href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;}">Privacy</a>
+                </li>
+                <li class="mr-3 mr-lg-0"><a
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to security&quot;,&quot;label&quot;:&quot;text:security&quot;}"
+                        href="https://github.com/security">Security</a></li>
+                <li class="mr-3 mr-lg-0"><a href="https://www.githubstatus.com/"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to status&quot;,&quot;label&quot;:&quot;text:status&quot;}">Status</a>
+                </li>
+                <li class="mr-3 mr-lg-0"><a data-ga-click="Footer, go to help, text:Docs"
+                        href="https://docs.github.com">Docs</a></li>
+                <li class="mr-3 mr-lg-0"><a href="https://support.github.com?tags=dotcom-footer"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;}">Contact
+                        GitHub</a></li>
+                <li class="mr-3 mr-lg-0"><a href="https://github.com/pricing"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Pricing&quot;,&quot;label&quot;:&quot;text:Pricing&quot;}">Pricing</a>
+                </li>
+                <li class="mr-3 mr-lg-0"><a href="https://docs.github.com"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to api&quot;,&quot;label&quot;:&quot;text:api&quot;}">API</a>
+                </li>
+                <li class="mr-3 mr-lg-0"><a href="https://services.github.com"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to training&quot;,&quot;label&quot;:&quot;text:training&quot;}">Training</a>
+                </li>
+                <li class="mr-3 mr-lg-0"><a href="https://github.blog"
+                        data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to blog&quot;,&quot;label&quot;:&quot;text:blog&quot;}">Blog</a>
+                </li>
+                <li><a data-ga-click="Footer, go to about, text:about" href="https://github.com/about">About</a></li>
+            </ul>
+        </nav>
+    </div> -->
+    
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
